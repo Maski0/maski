@@ -8,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react"
+import ForceGraph from '@/components/SkillForceGraph'
 
 export default function Portfolio() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
@@ -277,6 +278,7 @@ export default function Portfolio() {
               ))}
             </Tabs>
           </motion.div>
+          <ForceGraph width = {1000} height = {800} />
         </section>
 
         {/* Contact Section */}

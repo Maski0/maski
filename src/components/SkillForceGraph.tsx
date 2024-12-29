@@ -1,31 +1,7 @@
-// types.ts
-interface Node {
-  id: string;
-  group: number;
-  x?: number;
-  y?: number;
-  fx?: number | null;
-  fy?: number | null;
-  index?: number;
-  vx?: number;
-  vy?: number;
-}
-
-interface Link {
-  source: string | Node;
-  target: string | Node;
-  value: number;
-}
-
-interface GraphData {
-  nodes: Node[];
-  links: Link[];
-}
-
-// ForceGraph.tsx
 import React, { useEffect, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import * as d3 from 'd3';
+import type { GraphData, Node, Link } from '@/types';
 
 interface ForceGraphProps {
   data?: GraphData;
@@ -207,7 +183,7 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
 
   return (
     <Card className="p-4 w-full">
-      <svg ref={svgRef} width="100%" height={propHeight} />
+      <svg ref={svgRef} width={propWidth} height={propHeight} />
     </Card>
   );
 };
