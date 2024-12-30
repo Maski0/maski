@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -20,12 +20,6 @@ export default function Portfolio() {
     transition: { duration: 0.5 },
   };
 
-  const skills = {
-    languages: ["Python", "JavaScript", "C#", "Java", "SQL"],
-    gamedev: ["Unity", "Unreal Engine", "Godot", "WebGL", "Three.js"],
-    backend: ["Node.js", "Django", "FastAPI", "PostgreSQL", "MongoDB"],
-    tools: ["Git", "Docker", "AWS", "CI/CD", "Linux"],
-  };
 
   const projects = [
     {
@@ -87,7 +81,7 @@ export default function Portfolio() {
 
         <ProjectsSection projects={projects} fadeIn={fadeIn} />
 
-        <SkillsSection skills={skills} fadeIn={fadeIn} />
+        <SkillsSection fadeIn={fadeIn} />
 
         <ContactSection fadeIn={fadeIn} />
 
