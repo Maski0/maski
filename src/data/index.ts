@@ -6,11 +6,61 @@ export const aboutData = [
   "I specialize in Unity and Unreal Engine for game development, and Node.js/Python for backend services. I’m particularly interested in multiplayer game architectures and real-time systems.",
 ];
 
+export const experienceData = [
+  {
+    role: "Senior Game Developer",
+    company: "GameStudio Inc",
+    period: "2020 - Present",
+    description:
+      `Led development of the company's main product using **React** and **Node.js**. Key achievements include:
 
+* Implemented crucial features for [Project X](https://project-x.example.com)
+* Contributed to the [Open Source Community](https://github.com/organization)
+      `,
+  },
+  {
+    role: "Backend Engineer",
+    company: "TechCorp",
+    period: "2018 - 2020",
+    description:
+      "Developed scalable backend services for mobile games and real-time applications.",
+  },
+  {
+    role: "Game Developer",
+    company: "IndieGames Ltd",
+    period: "2016 - 2018",
+    description:
+      "Created indie games and prototypes, handled both gameplay and backend systems.",
+  },
+];
+
+export const projectsData = [
+  {
+    title: "3D RPG Game",
+    description:
+      "A fantasy RPG built with Unity featuring procedural generation and advanced AI systems.",
+    tech: ["Unity", "C#", "Blender"],
+    link: "#",
+  },
+  {
+    title: "Game Backend Service",
+    description:
+      "Scalable backend service handling game state, multiplayer, and leaderboards.",
+    tech: ["Node.js", "MongoDB", "WebSocket"],
+    link: "#",
+  },
+  {
+    title: "Physics Engine",
+    description:
+      "Custom 2D physics engine with rigid body dynamics and collision detection.",
+    tech: ["C++", "OpenGL"],
+    link: "#",
+  },
+];
 
 export const SkillsData: GraphData = {
   nodes: [
-    {id: "Languages", group: 1},
+    { id: "Languages", group: 1 },
     { id: "C#", group: 2 },
     { id: "C++", group: 2 },
     { id: "Python", group: 2 },
@@ -68,4 +118,3 @@ export const SkillsData: GraphData = {
     { source: "DevOps/Cloud", target: "Heroku", value: 1 },
   ],
 };
-

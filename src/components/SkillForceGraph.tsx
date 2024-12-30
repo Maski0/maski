@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import * as d3 from "d3";
 import { GraphData, Link, Node } from "@/types";
+import { Button } from "./ui/button";
+import { RefreshCcw } from "lucide-react";
 
 interface ForceGraphProps {
   data?: GraphData;
@@ -38,6 +40,8 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
+
 
   const updateDimensions = useCallback(() => {
     if (containerRef.current) {
@@ -123,6 +127,7 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
       });
 
     svg.call(zoom);
+    zoomRef.current = zoom;
 
     const simulation = d3
       .forceSimulation<Node>()
@@ -238,14 +243,38 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
     };
   }, [data, dimensions]);
 
+  const handleResetZoom = () => {
+    if (zoomRef.current && svgRef.current) {
+      d3.select(svgRef.current)
+        .transition()
+        .duration(750)
+        .call(zoomRef.current.transform, d3.zoomIdentity);
+    }
+  };
+
   return (
-    <Card className="w-full overflow-hidden bg-black/50 border-gray-800 ">
-      <div className="p-4" ref={containerRef}>
+    <Card className="group relative w-full overflow-hidden bg-black/50 border-gray-800 ">
+
+      <div className="pt-5 pl-5" ref={containerRef}>
         <svg
           ref={svgRef}
           className="w-full overflow-visible"
           style={{ minHeight: dimensions.height }}
         />
+        <Button
+          onClick={handleResetZoom}
+          className="
+            absolute top-4 right-4 z-10
+            bg-purple-600 text-white px-3 py-1 rounded
+            opacity-0
+            group-hover:opacity-100
+            transition-opacity
+            duration-300
+            hover:bg-purple-700
+          "
+        >
+          <RefreshCcw />
+        </Button>
       </div>
     </Card>
   );

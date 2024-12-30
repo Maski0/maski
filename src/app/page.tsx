@@ -10,6 +10,7 @@ import SkillsSection from "@/components/SkillsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import { Particles } from "@/components/utils/particles";
+import { experienceData, projectsData } from "@/data";
 
 export default function Portfolio() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);
@@ -20,55 +21,6 @@ export default function Portfolio() {
     transition: { duration: 0.5 },
   };
 
-
-  const projects = [
-    {
-      title: "3D RPG Game",
-      description:
-        "A fantasy RPG built with Unity featuring procedural generation and advanced AI systems.",
-      tech: ["Unity", "C#", "Blender"],
-      link: "#",
-    },
-    {
-      title: "Game Backend Service",
-      description:
-        "Scalable backend service handling game state, multiplayer, and leaderboards.",
-      tech: ["Node.js", "MongoDB", "WebSocket"],
-      link: "#",
-    },
-    {
-      title: "Physics Engine",
-      description:
-        "Custom 2D physics engine with rigid body dynamics and collision detection.",
-      tech: ["C++", "OpenGL"],
-      link: "#",
-    },
-  ];
-
-  const experience = [
-    {
-      role: "Senior Game Developer",
-      company: "GameStudio Inc",
-      period: "2020 - Present",
-      description:
-        "Led development of multiple successful game titles, implemented core gameplay systems.",
-    },
-    {
-      role: "Backend Engineer",
-      company: "TechCorp",
-      period: "2018 - 2020",
-      description:
-        "Developed scalable backend services for mobile games and real-time applications.",
-    },
-    {
-      role: "Game Developer",
-      company: "IndieGames Ltd",
-      period: "2016 - 2018",
-      description:
-        "Created indie games and prototypes, handled both gameplay and backend systems.",
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar isNavExpanded={isNavExpanded} setIsNavExpanded={setIsNavExpanded} />
@@ -77,9 +29,9 @@ export default function Portfolio() {
 
         <AboutSection fadeIn={fadeIn} />
 
-        <ExperienceSection experience={experience} fadeIn={fadeIn} />
+        <ExperienceSection experience={experienceData} fadeIn={fadeIn} />
 
-        <ProjectsSection projects={projects} fadeIn={fadeIn} />
+        <ProjectsSection projects={projectsData} fadeIn={fadeIn} />
 
         <SkillsSection fadeIn={fadeIn} />
 

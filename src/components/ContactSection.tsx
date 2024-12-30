@@ -15,8 +15,8 @@ interface ContactSectionProps {
 
 export default function ContactSection({ fadeIn }: ContactSectionProps) {
   return (
-    <section id="contact" className="py-20">
-      <motion.div className="max-w-7xl mx-auto px-4" {...fadeIn}>
+    <section id="contact" className="py-20 px-4">
+      <motion.div className="max-w-4xl mx-auto text-center" {...fadeIn}>
         <h2 className="text-3xl font-bold">Get In Touch</h2>
         <p className="text-gray-300 mb-6">
           I&apos;m currently open to new opportunities and collaborations.
