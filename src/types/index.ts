@@ -8,6 +8,7 @@ export interface Node {
     index?: number;
     vx?: number;
     vy?: number;
+    radius?: number;
   }
   
 export interface Link {

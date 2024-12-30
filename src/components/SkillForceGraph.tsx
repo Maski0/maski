@@ -1,14 +1,14 @@
-import React, { useEffect, useRef } from 'react';
-import { Card } from '@/components/ui/card';
-import * as d3 from 'd3';
-import type { GraphData, Node, Link } from '@/types';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { Card } from "@/components/ui/card";
+import * as d3 from "d3";
+import { GraphData, Link, Node } from "@/types";
 
 interface ForceGraphProps {
   data?: GraphData;
-  width?: number;
-  height?: number;
+  aspectRatio?: number;
 }
 
+// Define defaultData before the component
 const defaultData: GraphData = {
   nodes: [
     { id: "Frontend", group: 1 },
@@ -19,7 +19,7 @@ const defaultData: GraphData = {
     { id: "Express", group: 2 },
     { id: "Database", group: 1 },
     { id: "MongoDB", group: 2 },
-    { id: "PostgreSQL", group: 2 }
+    { id: "PostgreSQL", group: 2 },
   ],
   links: [
     { source: "Frontend", target: "React", value: 1 },
@@ -27,70 +27,99 @@ const defaultData: GraphData = {
     { source: "Backend", target: "Node.js", value: 1 },
     { source: "Backend", target: "Express", value: 1 },
     { source: "Database", target: "MongoDB", value: 1 },
-    { source: "Database", target: "PostgreSQL", value: 1 }
-  ]
+    { source: "Database", target: "PostgreSQL", value: 1 },
+  ],
 };
 
-const ForceGraph: React.FC<ForceGraphProps> = ({ 
+const ForceGraph: React.FC<ForceGraphProps> = ({
   data = defaultData,
-  width: propWidth = 800,
-  height: propHeight = 600
+  aspectRatio = 3 / 4,
 }) => {
-  const svgRef = useRef<SVGSVGElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  const updateDimensions = useCallback(() => {
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const computedStyle = window.getComputedStyle(container);
+      const paddingLeft = parseFloat(computedStyle.paddingLeft);
+      const paddingRight = parseFloat(computedStyle.paddingRight);
+      const paddingTop = parseFloat(computedStyle.paddingTop);
+      const paddingBottom = parseFloat(computedStyle.paddingBottom);
+
+      const availableWidth = container.clientWidth - paddingLeft - paddingRight;
+      const availableHeight = Math.max(availableWidth * aspectRatio, 400);
+
+      setDimensions({
+        width: availableWidth,
+        height: availableHeight,
+      });
+    }
+  }, [aspectRatio]);
 
   useEffect(() => {
-    if (!svgRef.current) return;
+    updateDimensions();
+    const resizeHandler = () => {
+      updateDimensions();
+    };
+    window.addEventListener("resize", resizeHandler);
+    return () => {
+      window.removeEventListener("resize", resizeHandler);
+    };
+  }, [updateDimensions]);
 
-    // Clear any existing SVG content
+  useEffect(() => {
+    if (!svgRef.current || dimensions.width === 0) return;
+
+    const { width, height } = dimensions;
+    const padding = width * 0.05;
+
     d3.select(svgRef.current).selectAll("*").remove();
 
-    const width = propWidth;
-    const height = propHeight;
-    const padding = 50;
-
-    // Type-safe simulation
-    const simulation = d3.forceSimulation<Node>()
-      .nodes(data.nodes)
-      .force("link", d3.forceLink<Node, Link>(data.links)
-        .id((d) => d.id)
-        .distance(100))
-      .force("charge", d3.forceManyBody<Node>().strength(-200))
-      .force("center", d3.forceCenter<Node>(width / 2, height / 2))
-      .force("collision", d3.forceCollide<Node>().radius(50))
-      .force("x", d3.forceX<Node>(width / 2).strength(0.05))
-      .force("y", d3.forceY<Node>(height / 2).strength(0.05))
-      .alphaDecay(0.01)
-      .alphaMin(0.001);
-
-    // Create SVG with proper typing
-    const svg = d3.select(svgRef.current)
-      .attr("viewBox", [0, 0, width, height])
-      .attr("class", "bg-white rounded-lg");
-
-    // Create background pattern
-    const defs = svg.append("defs");
-    const pattern = defs.append("pattern")
-      .attr("id", "grid")
-      .attr("width", 20)
-      .attr("height", 20)
-      .attr("patternUnits", "userSpaceOnUse");
-
-    pattern.append("circle")
-      .attr("cx", 3)
-      .attr("cy", 3)
-      .attr("r", 1)
-      .attr("fill", "#e2e8f0");
-
-    svg.append("rect")
+    const svg = d3
+      .select(svgRef.current)
       .attr("width", width)
       .attr("height", height)
-      .attr("fill", "url(#grid)");
+      .attr("viewBox", [0, 0, width, height]);
+
+    svg
+      .append("rect")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("fill", "transparent");
+
+    const patternSize = Math.max(width, height) * 0.025;
+    const defs = svg.append("defs");
+    const pattern = defs
+      .append("pattern")
+      .attr("id", "grid")
+      .attr("width", patternSize)
+      .attr("height", patternSize)
+      .attr("patternUnits", "userSpaceOnUse");
+
+    pattern
+      .append("circle")
+      .attr("cx", patternSize * 0.15)
+      .attr("cy", patternSize * 0.15)
+      .attr("r", patternSize * 0.05)
+      .attr("fill", "#aaa");
+
+    svg
+      .append("rect")
+      .attr("width", width)
+      .attr("height", height)
+      .attr("fill", "url(#grid)")
+      .attr("rx", 8);
 
     const g = svg.append("g");
 
-    // Type-safe zoom behavior
-    const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .extent([[0, 0], [width, height]])
+    const zoom = d3
+      .zoom<SVGSVGElement, unknown>()
+      .extent([
+        [0, 0],
+        [width, height],
+      ])
       .scaleExtent([0.5, 2])
       .on("zoom", (event) => {
         g.attr("transform", event.transform);
@@ -98,36 +127,69 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
 
     svg.call(zoom);
 
-    // Create links with proper typing
-    const link = g.append("g")
+    const simulation = d3
+      .forceSimulation<Node>()
+      .nodes(data.nodes)
+      .force(
+        "link",
+        d3
+          .forceLink<Node, Link>(data.links)
+          .id((d) => d.id)
+          .distance(width * 0.1)
+      )
+      .force("charge", d3.forceManyBody<Node>().strength(-width * 0.25))
+      .force("center", d3.forceCenter<Node>(width / 2, height / 2))
+      .force("collision", d3.forceCollide<Node>().radius(width * 0.05))
+      .force("x", d3.forceX<Node>(width / 2).strength(0.05))
+      .force("y", d3.forceY<Node>(height / 2).strength(0.05))
+      .alphaDecay(0.01)
+      .alphaMin(0.001);
+
+    const link = g
+      .append("g")
       .selectAll<SVGLineElement, Link>("line")
       .data(data.links)
       .join("line")
       .attr("class", "stroke-gray-300")
-      .attr("stroke-width", 2);
+      .attr("stroke-width", Math.max(width * 0.002, 1.5));
 
-    // Create nodes with proper typing
-    const node = g.append("g")
+    const node = g
+      .append("g")
       .selectAll<SVGGElement, Node>("g")
       .data(data.nodes)
       .join("g")
       .attr("class", "cursor-grab active:cursor-grabbing");
 
-    node.append("circle")
-      .attr("r", d => d.group === 1 ? 30 : 20)
-      .attr("class", d => d.group === 1 
-        ? "fill-blue-200 stroke-blue-500" 
-        : "fill-green-200 stroke-green-500")
-      .attr("stroke-width", 2);
-
-    node.append("text")
-      .text(d => d.id)
-      .attr("class", "text-sm font-medium fill-gray-700 pointer-events-none")
+    const textSelection = node
+      .append("text")
+      .text((d) => d.id)
+      .attr("class", "fill-gray-200 pointer-events-none")
       .attr("text-anchor", "middle")
-      .attr("dy", ".35em");
+      .attr("dy", ".35em")
+      .style("font-size", `${Math.max(width * 0.012, 12)}px`)
+      .style("font-weight", "500");
 
-    // Type-safe drag behavior
-    const drag = d3.drag<SVGGElement, Node>()
+    textSelection.each(function (d) {
+      const textWidth = (this as SVGTextElement).getBBox().width;
+      const padding = 10;
+      d.radius = Math.max(textWidth / 2 + padding, 20);
+    });
+
+    const nodeRadius = (group: number) =>
+      group === 1 ? Math.max(width * 0.03, 20) : Math.max(width * 0.02, 15);
+
+    node
+      .append("circle")
+      .attr("r", (d) => d.radius ?? nodeRadius(d.group))
+      .attr("class", (d) =>
+        d.group === 1
+          ? "fill-purple-900 stroke-purple-800"
+          : "fill-purple-700 stroke-purple-500"
+      )
+      .attr("stroke-width", Math.max(width * 0.002, 1.5));
+    textSelection.raise();
+    const drag = d3
+      .drag<SVGGElement, Node>()
       .on("start", (event, d) => {
         if (!event.active) {
           simulation.alphaTarget(0.3).restart();
@@ -142,7 +204,7 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
       .on("end", (event, d) => {
         if (!event.active) {
           simulation.alphaTarget(0.1);
-          
+
           setTimeout(() => {
             d.fx = null;
             d.fy = null;
@@ -158,8 +220,7 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
     node.call(drag);
 
     simulation.on("tick", () => {
-      // Type-safe boundary constraints
-      data.nodes.forEach(node => {
+      data.nodes.forEach((node) => {
         if (!node.fx && node.x !== undefined && node.y !== undefined) {
           node.x = Math.max(padding, Math.min(width - padding, node.x));
           node.y = Math.max(padding, Math.min(height - padding, node.y));
@@ -167,23 +228,28 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
       });
 
       link
-        .attr("x1", d => (d.source as Node).x ?? 0)
-        .attr("y1", d => (d.source as Node).y ?? 0)
-        .attr("x2", d => (d.target as Node).x ?? 0)
-        .attr("y2", d => (d.target as Node).y ?? 0);
+        .attr("x1", (d) => (d.source as Node).x ?? 0)
+        .attr("y1", (d) => (d.source as Node).y ?? 0)
+        .attr("x2", (d) => (d.target as Node).x ?? 0)
+        .attr("y2", (d) => (d.target as Node).y ?? 0);
 
-      node
-        .attr("transform", d => `translate(${d.x ?? 0},${d.y ?? 0})`);
+      node.attr("transform", (d) => `translate(${d.x ?? 0},${d.y ?? 0})`);
     });
 
     return () => {
       simulation.stop();
     };
-  }, [data, propWidth, propHeight]);
+  }, [data, dimensions]);
 
   return (
-    <Card className="p-4 w-full">
-      <svg ref={svgRef} width={propWidth} height={propHeight} />
+    <Card className="w-full overflow-hidden bg-black/50 border-gray-800 ">
+      <div className="p-4" ref={containerRef}>
+        <svg
+          ref={svgRef}
+          className="w-full overflow-visible"
+          style={{ minHeight: dimensions.height }}
+        />
+      </div>
     </Card>
   );
 };
