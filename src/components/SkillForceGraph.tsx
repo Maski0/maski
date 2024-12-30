@@ -45,9 +45,6 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
       const computedStyle = window.getComputedStyle(container);
       const paddingLeft = parseFloat(computedStyle.paddingLeft);
       const paddingRight = parseFloat(computedStyle.paddingRight);
-      const paddingTop = parseFloat(computedStyle.paddingTop);
-      const paddingBottom = parseFloat(computedStyle.paddingBottom);
-
       const availableWidth = container.clientWidth - paddingLeft - paddingRight;
       const availableHeight = Math.max(availableWidth * aspectRatio, 400);
 
