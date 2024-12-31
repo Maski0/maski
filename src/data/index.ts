@@ -1,61 +1,72 @@
 import { GraphData } from "@/types";
 
 export const aboutData = [
-  "I’m a passionate game developer and backend engineer with over 6 years of experience in creating engaging games and scalable backend systems.",
-  "My journey in game development started with modding existing games, which led me to pursue a career in both game development and backend engineering.",
-  "I specialize in Unity and Unreal Engine for game development, and Node.js/Python for backend services. I’m particularly interested in multiplayer game architectures and real-time systems.",
+  "I’m a passionate game developer and backend engineer with over two years of experience creating engaging games and scalable backend systems.",
+  "My journey in game development began with a strong interest in gaming, which led me to pursue computer science and ultimately a career in game development.",
+  "During my professional experience, I encountered growing requirements for backend solutions, which sparked my interest in building and optimizing these systems. Now, I’m considering transitioning my focus toward backend engineering.",
+  "I specialize in Unity and Unreal Engine for game development, as well as Node.js, Python, and Go for backend services (though my Go experience comes from personal projects). I’m excited to continue exploring and refining my skills in backend systems, also Game Development if opportunity arises",
 ];
 
 export const experienceData = [
   {
-    role: "Senior Game Developer",
-    company: "GameStudio Inc",
-    period: "2020 - Present",
+    role: "FreeLance/Contract & OpenSource",
+    company: "Illiquid Labs pvt Ltd",
+    period: "Jun 2024 - present",
     description:
-      `Led development of the company's main product using **React** and **Node.js**. Key achievements include:
-
-* Implemented crucial features for [Project X](https://project-x.example.com)
-* Contributed to the [Open Source Community](https://github.com/organization)
+      `* Contributing to [Godot](https://github.com/godotengine/godot). C++
+* Projects on creating Backend Solutions.
+* MVP products for Clients (in my Github).
       `,
   },
   {
-    role: "Backend Engineer",
-    company: "TechCorp",
-    period: "2018 - 2020",
+    role: "Software/Game Developer II",
+    company: "Illiquid Labs pvt Ltd",
+    period: "Feb 2023 - Jun 2024",
     description:
-      "Developed scalable backend services for mobile games and real-time applications.",
+      `* Worked with Multiple clients on Developing or Optimizing their proprietary Games(Unreal & Unity) and as well as Products related to Nft’s & Blockchain, Automated Bots (Twitter, Telegram). [Website](https://www.illiquidlabs.com/)
+      `,
   },
   {
-    role: "Game Developer",
-    company: "IndieGames Ltd",
-    period: "2016 - 2018",
+    role: "Game Developer (C#/Python)",
+    company: "Vazrh Studios (Brugu Solutions)",
+    period: "Jul 2022 - Jan 2023",
     description:
-      "Created indie games and prototypes, handled both gameplay and backend systems.",
+      `* Project MGR-- Developed and optimized features such as Gameplay, Multiplayer, Wallet Connection and Database of the Game for 500-1000 avg concurrent users.
+* With Azure Playfab for database Photon server for multiplayer,Thirdweb Api for wallet integration in Unity Framework. [Youtube](https://www.youtube.com/watch?v=Q-HixedhOFI&ab_channel=Metagrandrace) [Website](https://metagrandrace.com/)
+      `,
+  },
+  {
+    role: "AR-VR Developer (C#) Intern",
+    company: "Aespaes Lab Pvt",
+    period: "Jun 2021 - Nov 2021",
+    description:
+      `* Developed projects with a Bootstrap team for Educational and Industrial Sectors making Mobile AR/VR Applications.`,
   },
 ];
 
 export const projectsData = [
   {
-    title: "3D RPG Game",
+    title: "GarageManager",
     description:
-      "A fantasy RPG built with Unity featuring procedural generation and advanced AI systems.",
-    tech: ["Unity", "C#", "Blender"],
-    link: "#",
+      "Developing a Backend Restful services for a Garage Client, key features of the main Frontend software are using - Accounting, Billing & Invoicing, Customer Database, Inventory Control, Service History, Payment Options, Tools (SMS, Alerts, Mails).",
+    tech: ["JAVA SpringBoot", "Azure MysqlDB", "Azure (ContainerApps,Functions)"],
+    link: "https://github.com/Maski0/GarageManager.git",
   },
   {
-    title: "Game Backend Service",
+    title: "OpenGl-FrameWork (Game/Graphic Engine)",
     description:
-      "Scalable backend service handling game state, multiplayer, and leaderboards.",
-    tech: ["Node.js", "MongoDB", "WebSocket"],
-    link: "#",
+      "This is a 2D Opengl Graphic FrameWork Template without any External Api's (Core OpenGL) to understand the GPU Shader language, and Rendering (lighting)",
+    tech: ["C++", "OpenGl ", "GLFW","ImGUI","GLEW"],
+    link: "https://github.com/Maski0/OpenGlFrameWork",
   },
   {
-    title: "Physics Engine",
+    title: "Blog-Engine",
     description:
-      "Custom 2D physics engine with rigid body dynamics and collision detection.",
-    tech: ["C++", "OpenGL"],
-    link: "#",
+      "A Backend Personal BlogEngine which can be integrated easily with a front end application as a feature (inProgress, adding features on a daily basis)",
+    tech: ["Golang", "Postgres", "Docker (Linux)", "Kubernetes(AWS)"],
+    link: "https://github.com/Maski0/Blog-Engine.git",
   },
+  
 ];
 
 export const SkillsData: GraphData = {
@@ -89,6 +100,11 @@ export const SkillsData: GraphData = {
     { id: "AWS", group: 2 },
     { id: "GCP", group: 2 },
     { id: "Heroku", group: 2 },
+    { id: "Game Dev", group: 1 },
+    { id: "Unity", group: 2 },
+    { id: "Unreal", group: 2 },
+    { id: "DX12/Vulkan", group: 2 },
+    
   ],
   links: [
     { source: "Languages", target: "C#", value: 1 },
@@ -116,5 +132,8 @@ export const SkillsData: GraphData = {
     { source: "DevOps/Cloud", target: "AWS", value: 1 },
     { source: "DevOps/Cloud", target: "GCP", value: 1 },
     { source: "DevOps/Cloud", target: "Heroku", value: 1 },
+    { source: "Game Dev", target: "Unity", value: 1 },
+    { source: "Game Dev", target: "Unreal", value: 1 },
+    { source: "Game Dev", target: "DX12/Vulkan", value: 1 },
   ],
 };

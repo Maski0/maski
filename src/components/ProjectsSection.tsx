@@ -22,11 +22,19 @@ interface ProjectsSectionProps {
   };
 }
 
-export default function ProjectsSection({ projects, fadeIn }: ProjectsSectionProps) {
+export default function ProjectsSection({
+  projects,
+  fadeIn,
+}: ProjectsSectionProps) {
   return (
     <section id="projects" className="py-20">
       <motion.div className="max-w-4xl mx-auto px-4" {...fadeIn}>
-        <h2 className="text-3xl font-bold mb-12">Featured Projects</h2>
+        <h2 className="text-3xl font-bold mb-12">
+          Featured Projects{" "}
+          <span className="text-sm italic text-gray-400">
+            (*this website as well)
+          </span>
+        </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, index) => (
             <Card
@@ -34,7 +42,9 @@ export default function ProjectsSection({ projects, fadeIn }: ProjectsSectionPro
               className="bg-black/50 border-gray-800 hover:border-primary transition-colors"
             >
               <CardContent className="p-6 space-y-4">
-                <h3 className="text-xl font-bold text-gray-100">{project.title}</h3>
+                <h3 className="text-xl font-bold text-gray-100">
+                  {project.title}
+                </h3>
                 <p className="text-gray-300">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech, i) => (

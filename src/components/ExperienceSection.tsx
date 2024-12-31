@@ -75,7 +75,7 @@ export default function ExperienceSection({
               <CardContent className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-xl font-bold">{exp.role}</h3>
+                    <h3 className="text-xl font-bold text-gray-200">{exp.role}</h3>
                     <p className="text-gray-400">{exp.company}</p>
                   </div>
                   <span className="text-gray-500">{exp.period}</span>

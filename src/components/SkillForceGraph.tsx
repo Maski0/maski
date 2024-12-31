@@ -180,15 +180,32 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
     const nodeRadius = (group: number) =>
       group === 1 ? Math.max(width * 0.03, 20) : Math.max(width * 0.02, 15);
 
+
+    const filter = defs
+      .append("filter")
+      .attr("id", "glow")
+      .attr("width", "400%")
+      .attr("height", "400%");
+
+    filter
+      .append("feDropShadow")
+      .attr("dx", 0)
+      .attr("dy", 0)
+      .attr("stdDeviation", 5)
+      .attr("flood-color", "rgb(107,33,168)")
+      .attr("flood-opacity", 1);
+
     node
       .append("circle")
       .attr("r", (d) => d.radius ?? nodeRadius(d.group))
+      .style("filter", (d) => (d.group === 1 ? "url(#glow)" : null))
       .attr("class", (d) =>
         d.group === 1
-          ? "fill-purple-900 stroke-purple-800"
-          : "fill-purple-700 stroke-purple-500"
+          ? "fill-purple-800 stroke-purple-700"
+          : "fill-indigo-700 fill-indigo-500"
       )
       .attr("stroke-width", Math.max(width * 0.002, 1.5));
+    
     textSelection.raise();
     const drag = d3
       .drag<SVGGElement, Node>()

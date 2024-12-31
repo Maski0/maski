@@ -68,9 +68,9 @@ export default function Navbar({ isNavExpanded, setIsNavExpanded }: NavbarProps)
         {/* Social Links */}
         <div className="mt-8 flex flex-col gap-4">
           {[
-            { href: "mailto:contact@example.com", icon: Mail, label: "Email" },
-            { href: "https://github.com", icon: Github, label: "GitHub" },
-            { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
+            { href: "mailto:maskikarsrikar@gmail.com", icon: Mail, label: "Email" },
+            { href: "https://github.com/Maski0", icon: Github, label: "GitHub" },
+            { href: "https://www.linkedin.com/in/maski-srikar/", icon: Linkedin, label: "LinkedIn" },
           ].map((social) => (
             <Link
               key={social.href}
