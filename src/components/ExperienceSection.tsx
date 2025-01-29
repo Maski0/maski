@@ -66,7 +66,7 @@ export default function ExperienceSection({
   };
 
   return (
-    <section id="experience" className="py-20 bg-gray-900">
+    <section id="experience" className="py-20 bg-[#3c3e42]">
       <motion.div className="max-w-4xl mx-auto px-4" {...fadeIn}>
         <h2 className="text-3xl font-bold mb-12">Experience</h2>
         <div className="space-y-8">

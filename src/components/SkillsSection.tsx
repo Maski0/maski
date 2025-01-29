@@ -8,7 +8,7 @@ import { SkillsData } from "@/data";
 
 export default function SkillsSection({ fadeIn }) {
   return (
-    <section id="skills" className="py-20  bg-gray-900">
+    <section id="skills" className="py-20  bg-[#3c3e42]">
       <motion.div className="max-w-7xl mx-auto px-4" {...fadeIn}>
         <h2 className="text-3xl font-bold mb-12">Skills</h2>
         <div className="w-full h-full">

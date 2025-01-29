@@ -22,7 +22,7 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-[#212121]">
       <Navbar isNavExpanded={isNavExpanded} setIsNavExpanded={setIsNavExpanded} />
       <div className="">
         <HeroSection />
