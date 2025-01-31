@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { TextScramble } from "./utils/text-scramble";
+import { MouseTrail } from "./utils/mouse-trail";
 
 export default function HeroSection() {
   return (
     <section className="min-h-screen flex items-center justify-center px-4">
+      <MouseTrail />
       <motion.div
         className="w-full max-w-4xl mx-auto rounded-2xl p-12 backdrop-blur-sm"
         initial={{ opacity: 0, y: 20 }}

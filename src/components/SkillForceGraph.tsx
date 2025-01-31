@@ -42,7 +42,6 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const zoomRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
 
-
   const updateDimensions = useCallback(() => {
     if (containerRef.current) {
       const container = containerRef.current;
@@ -117,11 +116,30 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
 
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
+      .filter((event) => {
+        // For wheel events, require Ctrl key to zoom
+        if (event.type === "wheel") {
+          return event.shiftKey; // Or event.shiftKey if you prefer SHIFT
+        }
+        // For mousedown events (panning), allow only if it's the main (left) button
+        return !event.button;
+      })
       .extent([
         [0, 0],
         [width, height],
       ])
       .scaleExtent([0.5, 2])
+      // We hook into "start" and "end" to change the cursor when panning the background.
+      .on("start", (event) => {
+        // If it's a mouse-based start (not touch), set cursor to move
+        if (event.sourceEvent && event.sourceEvent.type === "mousedown") {
+          svg.style("cursor", "move");
+        }
+      })
+      .on("end", () => {
+        // Return the cursor to default (or "auto") once the zoom/pan ends
+        svg.style("cursor", "default");
+      })
       .on("zoom", (event) => {
         g.attr("transform", event.transform);
       });
@@ -180,7 +198,6 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
     const nodeRadius = (group: number) =>
       group === 1 ? Math.max(width * 0.03, 20) : Math.max(width * 0.02, 15);
 
-
     const filter = defs
       .append("filter")
       .attr("id", "glow")
@@ -205,7 +222,7 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
           : "fill-indigo-700 fill-indigo-500"
       )
       .attr("stroke-width", Math.max(width * 0.002, 1.5));
-    
+
     textSelection.raise();
     const drag = d3
       .drag<SVGGElement, Node>()
@@ -271,7 +288,6 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
 
   return (
     <Card className="group relative w-full overflow-hidden bg-black/50 border-gray-800 ">
-
       <div className="pt-5 pl-5" ref={containerRef}>
         <svg
           ref={svgRef}
@@ -292,6 +308,9 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
         >
           <RefreshCcw />
         </Button>
+        <div className="absolute bottom-4 left-4 bg-purple-600 text-white px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg text-sm">
+          Shift + Scroll to Zoom
+        </div>
       </div>
     </Card>
   );
