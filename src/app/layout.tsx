@@ -14,7 +14,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""; // Read from env
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/maski"; // Read from env
   return (
     <html lang="en" className="scroll-smooth">
       <head>
