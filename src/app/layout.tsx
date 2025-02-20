@@ -1,10 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import getConfig from 'next/config';
 
 const inter = Inter({ subsets: ['latin'] })
-const { publicRuntimeConfig } = getConfig();
 
 export const metadata: Metadata = {
   title: `Maski's Portfolio`,
@@ -16,11 +14,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""; // Read from env
   return (
     <html lang="en" className="scroll-smooth">
       <head>
         {/* Use basePath to correctly load manifest.json */}
-        <link rel="manifest" href={`${publicRuntimeConfig.basePath}/manifest.json`} />
+        <link rel="manifest" href={`${basePath}/manifest.json`} />
         <body className={inter.className}>{children}</body>
       </head>
     </html>

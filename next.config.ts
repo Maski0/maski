@@ -4,8 +4,8 @@ const nextConfig: NextConfig = {
   output: "export",
   basePath: "/maski", // Replace with your actual repo name
   assetPrefix: "/maski/",
-  publicRuntimeConfig: {
-    basePath: "/maski",
+  env: {
+    NEXT_PUBLIC_BASE_PATH: "/maski", // Expose it to the frontend
   },
 };
 
