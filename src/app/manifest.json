@@ -1,0 +1,14 @@
+{
+    "name": "Maski's Portfolio",
+    "short_name": "Portfolio App",
+    "description": "Porfolio showcase",
+    "start_url": "/",
+    "display": "fullscreen",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "type": "image/ico",
+            "sizes": "128x128"
+        }
+    ]
+}
