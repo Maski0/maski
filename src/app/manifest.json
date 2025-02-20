@@ -2,7 +2,7 @@
     "name": "Maski's Portfolio",
     "short_name": "Portfolio App",
     "description": "Porfolio showcase",
-    "start_url": "/",
+    "start_url": "/maski",
     "display": "fullscreen",
     "icons": [
         {
