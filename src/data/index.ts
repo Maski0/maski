@@ -46,14 +46,68 @@ export const experienceData = [
 
 export const projectsData = [
   {
+    title: "ImbecileGPT",
+    subtitle: "Client Project",
+    description:
+      "A Custom Agentic Personality Chatbot that uses Different Knlowledge Sources(PDF's, NewsAPI, NotionPages) & tools to generate a response. Also having a Visual Lip-Synced Character.",
+    tech: ["Python","Typescript","LangGraph","NextJS","RAG","Qdrant Vector DB"],
+    link: "#",
+    video: {
+      videoSrc: "https://drive.google.com/file/d/1HpB-pJQhxdHhXIUAbOfAq6bm8D4ht0Ta/preview",
+      thumbnailSrc: "/maski/ImbecileGPT.png",
+      thumbnailAlt: "ImbecileGPT",
+    },
+  },
+  {
+    title: "Bogdanoff Twins",
+    subtitle: "Client Project",
+    description:
+      "A Custom Agentic Personality Chatbot that uses Different Knlowledge Sources(Telegram Channels, NewsAPI) & tools to generate a response. In frontend using twin Visual Lip-Synced Characters.",
+    tech: ["Python","Typescript","LangGraph","NextJS","RAG","Qdrant Vector DB"],
+    link: "https://www.bogdanoff.gg/",
+    video: {
+      videoSrc: "https://drive.google.com/file/d/1gTH4zFtr6ewHXobcXvdVsgCbyBzvsylY/preview",
+      thumbnailSrc: "/maski/Bogdanoff.png",
+      thumbnailAlt: "Bogdanoff",
+    },
+  },
+  {
     title: "GarageManager",
+    subtitle: "Client Project",
     description:
       "Developing a Backend Restful services for a Garage Client, key features of the main Frontend software are using - Accounting, Billing & Invoicing, Customer Database, Inventory Control, Service History, Payment Options, Tools (SMS, Alerts, Mails).",
     tech: ["JAVA SpringBoot", "Azure MysqlDB", "Azure (ContainerApps,Functions)"],
     link: "https://github.com/Maski0/GarageManager.git",
   },
   {
+    title: "Conundrum",
+    subtitle: "work Project",
+    description:
+      "A 1v1 Multiplayer Turn-Based Elemental Strategy Game with 2500+ concurrent players. Handling Matchmaking, Leaderboard, and Gameplay.",
+    tech: ["C#","Unity","Networking","WebGL","Firebase"],
+    link: "",
+    video: {
+      videoSrc: "https://drive.google.com/file/d/12rB7jZPaNDEmL1eSp6DrsKMQdPBsGDfk/preview",
+      thumbnailSrc: "/maski/Conundrum.png",
+      thumbnailAlt: "Conundrum",
+    },
+  },
+  {
+    title: "Omni",
+    subtitle: "work Project",
+    description:
+      "A free for all Multiplayer Deathmatch Game with 1000+ concurrent players. Handling Lobby, Matchmaking, Leaderboard, and Gameplay. Blockchain NFT's for customizations and premium Paid matches.",
+    tech: ["C#","Unity","Networking","WebGL/Mobile","Firebase"],
+    link: "",
+    video: {
+      videoSrc: "https://drive.google.com/file/d/15eCwzImpB1JClT_G0qDITRWUOKI6GUK5/preview",
+      thumbnailSrc: "/maski/Omni.png",
+      thumbnailAlt: "Omni",
+    },
+  },
+  {
     title: "OpenGl-FrameWork (Game/Graphic Engine)",
+    subtitle: "Personal Project",
     description:
       "This is a 2D Opengl Graphic FrameWork Template without any External Api's (Core OpenGL) to understand the GPU Shader language, and Rendering (lighting)",
     tech: ["C++", "OpenGl ", "GLFW","ImGUI","GLEW"],
@@ -61,6 +115,7 @@ export const projectsData = [
   },
   {
     title: "Blog-Engine",
+    subtitle: "Personal Project",
     description:
       "A Backend Personal BlogEngine which can be integrated easily with a front end application as a feature (inProgress, adding features on a daily basis)",
     tech: ["Golang", "Postgres", "Docker (Linux)", "Kubernetes(AWS)"],
