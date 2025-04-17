@@ -32,7 +32,7 @@ export default function HeroSection() {
             </div>
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Building immersive gaming worlds and crafting scalable backend
+            Building immersive gaming worlds and crafting scalable Full Stack
             solutions to power modern experiences.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
