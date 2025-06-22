@@ -320,4 +320,6 @@ const ForceGraph: React.FC<ForceGraphProps> = memo(({
   );
 });
 
+ForceGraph.displayName = 'ForceGraph';
+
 export default ForceGraph;

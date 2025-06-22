@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import ReactMarkdown from "react-markdown";
 
@@ -13,16 +12,10 @@ interface ExperienceItem {
 
 interface ExperienceSectionProps {
   experience: ExperienceItem[];
-  fadeIn: {
-    initial: { opacity: number; y: number };
-    animate: { opacity: number; y: number };
-    transition: { duration: number };
-  };
 }
 
 export default function ExperienceSection({
   experience,
-  fadeIn,
 }: ExperienceSectionProps) {
   // Custom components for ReactMarkdown
   const components = {
@@ -67,7 +60,7 @@ export default function ExperienceSection({
 
   return (
     <section id="experience" className="py-20 bg-[#3c3e42]">
-      <motion.div className="max-w-4xl mx-auto px-4" {...fadeIn}>
+      <div className="max-w-4xl mx-auto px-4">
         <h2 className="text-3xl font-bold mb-12">Experience</h2>
         <div className="space-y-8">
           {experience.map((exp, index) => (
@@ -85,7 +78,7 @@ export default function ExperienceSection({
             </Card>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

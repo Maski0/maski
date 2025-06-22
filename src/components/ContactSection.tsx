@@ -1,22 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Mail, Github, Linkedin } from "lucide-react";
 
-interface ContactSectionProps {
-  fadeIn: {
-    initial: { opacity: number; y: number };
-    animate: { opacity: number; y: number };
-    transition: { duration: number };
-  };
-}
-
-export default function ContactSection({ fadeIn }: ContactSectionProps) {
+export default function ContactSection() {
   return (
     <section id="contact" className="py-20 px-4">
-      <motion.div className="max-w-4xl mx-auto text-center" {...fadeIn}>
+      <div className="max-w-4xl mx-auto text-center">
         <h2 className="text-3xl font-bold">Get In Touch</h2>
         <p className="text-gray-300 mb-6">
           I&apos;m currently open to new opportunities and collaborations.
@@ -42,7 +33,7 @@ export default function ContactSection({ fadeIn }: ContactSectionProps) {
             </Link>
           </Button>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,27 +28,20 @@ interface Project {
 
 interface ProjectsSectionProps {
   projects: Project[];
-  fadeIn: {
-    initial: { opacity: number; y: number };
-    animate: { opacity: number; y: number };
-    transition: { duration: number };
-  };
 }
 
 export default function ProjectsSection({
   projects,
-  fadeIn,
 }: ProjectsSectionProps) {
   return (
     <section id="projects" className="py-20">
-      <motion.div className="max-w-4xl mx-auto px-4" {...fadeIn}>
+      <div className="max-w-4xl mx-auto px-4">
         <h2 className="text-3xl font-bold mb-12">
           Featured Projects{" "}
           <span className="text-sm italic text-gray-400">
             (*this website as well)
           </span>
         </h2>
-        {/* <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"> */}
         <Carousel opts={{ align: "start" }} className="w-full">
           <CarouselContent>
             {projects.map((project, index) => (
@@ -94,8 +86,7 @@ export default function ProjectsSection({
           <CarouselPrevious />
           <CarouselNext />
         </Carousel>
-        {/* </div> */}
-      </motion.div>
+      </div>
     </section>
   );
 }
