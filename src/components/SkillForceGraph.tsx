@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback, memo } from "react";
 import { Card } from "@/components/ui/card";
 import * as d3 from "d3";
 import { GraphData, Link, Node } from "@/types";
@@ -33,7 +33,16 @@ const defaultData: GraphData = {
   ],
 };
 
-const ForceGraph: React.FC<ForceGraphProps> = ({
+// Define consistent color scheme
+const colorScheme = {
+  primary: "fill-purple-700 stroke-purple-600",
+  secondary: "fill-indigo-600 stroke-indigo-500",
+  tertiary: "fill-blue-500 stroke-blue-400" // For group 3
+};
+
+const baseUIClass = "absolute bg-purple-600 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300";
+
+const ForceGraph: React.FC<ForceGraphProps> = memo(({
   data = defaultData,
   aspectRatio = 3 / 4,
 }) => {
@@ -117,9 +126,9 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
       .filter((event) => {
-        // For wheel events, require Ctrl key to zoom
+        // For wheel events, require Shift key to zoom
         if (event.type === "wheel") {
-          return event.shiftKey; // Or event.shiftKey if you prefer SHIFT
+          return event.shiftKey;
         }
         // For mousedown events (panning), allow only if it's the main (left) button
         return !event.button;
@@ -186,7 +195,7 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
       .attr("class", "fill-gray-200 pointer-events-none")
       .attr("text-anchor", "middle")
       .attr("dy", ".35em")
-      .style("font-size", `${Math.max(width * 0.012, 12)}px`)
+      .style("font-size", `${Math.max(Math.min(dimensions.width * 0.012, 16), 10)}px`)
       .style("font-weight", "500");
 
     textSelection.each(function (d) {
@@ -194,9 +203,6 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
       const padding = 10;
       d.radius = Math.max(textWidth / 2 + padding, 20);
     });
-
-    const nodeRadius = (group: number) =>
-      group === 1 ? Math.max(width * 0.03, 20) : Math.max(width * 0.02, 15);
 
     const filter = defs
       .append("filter")
@@ -214,13 +220,16 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
 
     node
       .append("circle")
-      .attr("r", (d) => d.radius ?? nodeRadius(d.group))
+      .attr("r", (d) => d.radius ?? 20)
       .style("filter", (d) => (d.group === 1 ? "url(#glow)" : null))
-      .attr("class", (d) =>
-        d.group === 1
-          ? "fill-purple-800 stroke-purple-700"
-          : "fill-indigo-700 fill-indigo-500"
-      )
+      .attr("class", (d) => {
+        switch(d.group) {
+          case 1: return colorScheme.primary;
+          case 2: return colorScheme.secondary;
+          case 3: return colorScheme.tertiary;
+          default: return colorScheme.secondary;
+        }
+      })
       .attr("stroke-width", Math.max(width * 0.002, 1.5));
 
     textSelection.raise();
@@ -274,17 +283,20 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
 
     return () => {
       simulation.stop();
+      if (zoomRef.current && svgRef.current) {
+        d3.select(svgRef.current).on('.zoom', null);
+      }
     };
   }, [data, dimensions]);
 
-  const handleResetZoom = () => {
+  const handleResetZoom = useCallback(() => {
     if (zoomRef.current && svgRef.current) {
       d3.select(svgRef.current)
         .transition()
         .duration(750)
         .call(zoomRef.current.transform, d3.zoomIdentity);
     }
-  };
+  }, []);
 
   return (
     <Card className="group relative w-full overflow-hidden bg-black/50 border-gray-800 ">
@@ -296,24 +308,16 @@ const ForceGraph: React.FC<ForceGraphProps> = ({
         />
         <Button
           onClick={handleResetZoom}
-          className="
-            absolute top-4 right-4 z-10
-            bg-purple-600 text-white px-3 py-1 rounded
-            opacity-0
-            group-hover:opacity-100
-            transition-opacity
-            duration-300
-            hover:bg-purple-700
-          "
+          className={`${baseUIClass} top-4 right-4 z-10 px-3 py-1 rounded hover:bg-purple-700`}
         >
           <RefreshCcw />
         </Button>
-        <div className="absolute bottom-4 left-4 bg-purple-600 text-white px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg text-sm">
+        <div className={`${baseUIClass} bottom-4 left-4 px-4 py-2 rounded-lg text-sm`}>
           Shift + Scroll to Zoom
         </div>
       </div>
     </Card>
   );
-};
+});
 
 export default ForceGraph;
